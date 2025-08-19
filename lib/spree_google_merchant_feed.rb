@@ -1,0 +1,5 @@
+require 'spree_core'
+require 'spree_extension'
+require 'spree_google_merchant_feed/engine'
+require 'spree_google_merchant_feed/version'
+require 'spree_google_merchant_feed/configuration'

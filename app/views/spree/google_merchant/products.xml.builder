@@ -66,9 +66,11 @@ xml.rss version: "2.0", "xmlns:g" => "http://base.google.com/ns/1.0" do
             xml.tag! "g:product_type", product_breadcrumb_taxons(product).map(&:name).join(' > ')
             xml.tag! "g:brand", product.brand&.name if product.brand.present?
 
-            # Shipping weight
-            if product.weight.present?
-              xml.tag! "g:shipping_weight", "#{product.weight} #{product.weight_unit}"
+            # Shipping weight (variant first, fallback to product)
+            variant_weight = variant.weight.presence || product.weight
+            if variant_weight.present?
+              weight_units = Spree::Config.try(:weight_units).presence || 'g'
+              xml.tag! "g:shipping_weight", "#{variant_weight} #{weight_units}"
             end
           end
 
